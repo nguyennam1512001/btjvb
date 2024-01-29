@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/btjvb/static/css/main.780e4cbc.css",
+    "main.js": "/btjvb/static/js/main.9b47e08c.js",
+    "static/js/787.dfca1d9d.chunk.js": "/btjvb/static/js/787.dfca1d9d.chunk.js",
+    "static/media/suny.png": "/btjvb/static/media/suny.9a0c871759831fb29b78.png",
+    "static/media/cloud.png": "/btjvb/static/media/cloud.2713fe6e5bdcb3611ea6.png",
+    "static/media/rain.png": "/btjvb/static/media/rain.488bdef21ef3b1fdfe22.png",
+    "index.html": "/btjvb/index.html",
+    "main.780e4cbc.css.map": "/btjvb/static/css/main.780e4cbc.css.map",
+    "main.9b47e08c.js.map": "/btjvb/static/js/main.9b47e08c.js.map",
+    "787.dfca1d9d.chunk.js.map": "/btjvb/static/js/787.dfca1d9d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.780e4cbc.css",
+    "static/js/main.9b47e08c.js"
+  ]
+}
