@@ -1,0 +1,83 @@
+.forecast {
+    width           : 70%;
+    margin          : auto;
+    background-color: #F4F6FA;
+    min-width       : 500px;
+    padding         : 1% 2%;
+
+
+
+
+    .forecast_content {
+        position        : relative;
+        padding         : 3%;
+        border-radius   : 10px;
+        border-right    : 3px solid #E1EDFF;
+        border-bottom   : 3px solid #E1EDFF;
+        background-color: white;
+
+        .spinner {
+            position: absolute;
+            top     : 10px;
+            right   : 10px;
+        }
+
+
+        .time {
+            margin: 40px 0;
+            color : #626161;
+        }
+
+        .temperature {
+            display        : flex;
+            justify-content: center;
+            gap            : 40px;
+            align-items    : center;
+
+            .temperature_icon {
+                position : relative;
+                font-size: 6rem;
+
+                .icon_chilren {
+                    background-color: #ffff;
+                    position        : absolute;
+                    width           : 57px;
+                    height          : 43px;
+                    border-radius   : 70% 100%;
+                    font-size       : 5rem;
+                    top             : -17px;
+                    right           : -24px;
+                }
+            }
+
+
+            .temperature_degree {
+                font-size  : 3rem;
+                font-weight: bolder;
+                display    : flex;
+
+                span {
+                    font-size: 1.8rem;
+                }
+            }
+        }
+
+        .humidity,
+        .wind_speed {
+            margin-top: 20px;
+            color     : #626161;
+
+            p {
+                margin-top : 10px;
+                font-weight: 700;
+                color      : black;
+            }
+        }
+    }
+
+}
+
+canvas {
+    width: 100%;
+    flex : 1;
+}

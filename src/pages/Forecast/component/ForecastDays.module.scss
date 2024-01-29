@@ -1,0 +1,39 @@
+.active {
+    color           : white;
+    background-color: #5696F6;
+    border-radius   : 10px;
+}
+
+.day {
+    padding   : 10px;
+    margin-top: 10px;
+    flex      : 1;
+    cursor    : pointer;
+
+    .time {
+        text-align : center;
+        font-weight: 700;
+        font-size  : 1.6rem;
+    }
+
+    .temperature_icon {
+        padding  : 10px;
+        font-size: 3.2rem;
+    }
+
+    .sunny {
+        color: rgb(232, 232, 140);
+    }
+
+    .humidity {
+        color     : #626161;
+        font-size : 1.4rem;
+        text-align: center;
+    }
+
+    &.active {
+        .humidity {
+            color: white;
+        }
+    }
+}
