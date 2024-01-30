@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchForecast } from '../../store/ForecastSlice';
+import { fetchForecast, setIsLoading, setCurrentCity } from '../../store/ForecastSlice';
 import style from './Forecast.module.scss';
 import clsx from 'clsx';
 import { formatLocalTime, convertToLowerCaseAndRemoveAccents } from '../../utils/locationUtil';
@@ -19,16 +19,18 @@ const options = [
 ];
 
 const Forecast = () => {
+    const [isComponentMounted, setIsComponentMounted] = useState(false);
     const [selectedOption, setSelectedOption] = useState({ value: '', label: '' });
-    const { forecastData, message, isLoading, localtime, isOpen } = useSelector((state) => state.forecast);
+    const { forecastData, isLoading, localtime, isOpen, currentCity } = useSelector((state) => state.forecast);
     let dispatch = useDispatch();
     let time = formatLocalTime(localtime);
+    console.log(isLoading);
 
     useEffect(() => {
+        dispatch(setIsLoading(true));
         getCurrentCityName((city) => {
             try {
-                let cityNameFomat = convertToLowerCaseAndRemoveAccents(city);
-                setSelectedOption({ value: cityNameFomat, label: city });
+                dispatch(setCurrentCity(city));
             } catch (e) {
                 console.log('get city name fail');
             }
@@ -36,16 +38,22 @@ const Forecast = () => {
     }, []);
 
     useEffect(() => {
+        let cityNameFomat = convertToLowerCaseAndRemoveAccents(currentCity);
+        setSelectedOption({ value: cityNameFomat, label: currentCity });
+    }, [currentCity]);
+
+    useEffect(() => {
+        setIsComponentMounted(true);
         if (selectedOption.value) {
             dispatch(fetchForecast(selectedOption.value));
         }
-    }, [selectedOption]);
+    }, [dispatch, selectedOption]);
 
     return (
         <div className="container mt-5">
             <div className={clsx(style.forecast, 'row')}>
                 <div className={clsx(style.forecast_content)}>
-                    {isLoading && (
+                    {isLoading && isComponentMounted && (
                         <div className={clsx(style.spinner, 'spinner-border text-secondary')} role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>
