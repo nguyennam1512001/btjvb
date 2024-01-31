@@ -15,7 +15,7 @@ const Forecast24h = () => {
         if (localtime) {
             const [datePart, timePart] = localtime.split(' ');
             const [hour, minute] = timePart.split(':');
-            time = hour + ':00';
+            time = hour.padStart(2, '0') + ':00';
             currentIndex = forecast24h.findIndex((item) => {
                 return item.time.split(' ')[1] === time;
             });
@@ -27,6 +27,7 @@ const Forecast24h = () => {
             }
         }
     }
+
     return (
         <div className="">
             <div className={clsx(style.list, 'd-flex')}>
