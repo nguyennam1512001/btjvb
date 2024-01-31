@@ -24,7 +24,6 @@ const Forecast = () => {
     const { forecastData, isLoading, localtime, isOpen, currentCity } = useSelector((state) => state.forecast);
     let dispatch = useDispatch();
     let time = formatLocalTime(localtime);
-    console.log(isLoading);
 
     useEffect(() => {
         dispatch(setIsLoading(true));

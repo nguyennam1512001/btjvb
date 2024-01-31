@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import style from './Forecast24h.module.scss';
 import clsx from 'clsx';
@@ -22,7 +22,9 @@ const Forecast24h = () => {
         }
 
         for (let i = currentIndex; i < currentIndex + 24 && i < forecast24h.length; i += 2) {
-            data24h.push(forecast24h[i]);
+            if (forecast24h[i]) {
+                data24h.push(forecast24h[i]);
+            }
         }
     }
     return (
@@ -35,9 +37,9 @@ const Forecast24h = () => {
                                 <p>{item.temp_c}&nbsp;°C</p>
                                 <p>
                                     {item.will_it_rain === 0 ? (
-                                        <img width="40" src={cloudImg}></img>
+                                        <img width="40" src={cloudImg} alt="cloudy"></img>
                                     ) : (
-                                        <img width="40" src={rainImg}></img>
+                                        <img width="40" src={rainImg} alt="rain"></img>
                                     )}
                                 </p>
                                 <p>{time === item.time.split(' ')[1] ? 'Bây giờ' : item.time.split(' ')[1]}</p>

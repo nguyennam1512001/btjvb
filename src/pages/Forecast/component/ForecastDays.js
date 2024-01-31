@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import style from './ForecastDays.module.scss';
@@ -12,7 +12,7 @@ const ForecastDays = () => {
     const currentDay = getCurrentTimeFormat();
 
     let days = [];
-    const { forecastData, message, isLoading } = useSelector((state) => state.forecast);
+    const { forecastData } = useSelector((state) => state.forecast);
     if (forecastData?.forecast?.forecastday) {
         forecastData.forecast.forecastday.forEach((day) => {
             let date = new Date(day.hour[0].time);
@@ -49,12 +49,12 @@ const ForecastDays = () => {
                                     {day.cloud >= 50 ? (
                                         <div className={clsx(style.temperature_icon, 'material-icons')}>
                                             {/* cloud_queue */}
-                                            <img width="50" src={cloudImg}></img>
+                                            <img width="50" src={cloudImg} alt="cloudy"></img>
                                         </div>
                                     ) : (
                                         <div className={clsx(style.temperature_icon, style.sunny, 'material-icons')}>
                                             {/* wb_sunny */}
-                                            <img width="50" src={sunyImg}></img>
+                                            <img width="50" src={sunyImg} alt="sunny"></img>
                                         </div>
                                     )}
                                 </div>

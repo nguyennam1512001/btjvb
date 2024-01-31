@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import style from './DetailPopup.module.scss';
 import clsx from 'clsx';
@@ -7,7 +7,7 @@ import { closePopup } from '../../../store/ForecastSlice';
 const DetailPopup = () => {
     let dispatch = useDispatch();
     const { index } = useSelector((state) => state.forecast);
-    const { forecastData, message, isLoading, localtime, days, isOpen } = useSelector((state) => state.forecast);
+    const { days } = useSelector((state) => state.forecast);
 
     let date = days[index].date;
     let day = days[index].day;

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getForecast } from '../services/ForecastService'; // Thay đường dẫn tới hàm getForecast từ API của bạn
-import { getCurrentCityName } from '../utils/locationUtil';
 
 // Thunk action để fetch dữ liệu từ API
 export const fetchForecast = createAsyncThunk('forecast/fetchForecast', async (location) => {

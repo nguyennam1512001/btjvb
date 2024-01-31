@@ -2,7 +2,6 @@ import React from 'react';
 import { Line, Chart } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useDispatch, useSelector } from 'react-redux';
-import { getForecast24h } from '../../../store/ForecastSlice';
 
 const TemperatureChart = () => {
     let dispatch = useDispatch();
