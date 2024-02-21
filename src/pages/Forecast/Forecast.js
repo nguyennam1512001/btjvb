@@ -90,9 +90,10 @@ const Forecast = () => {
                                     </div>
                                 </div>
                                 <p className="fs-2 fw-bolder mt-3 text-center">
-                                    {forecastData && forecastData.current && forecastData.current.cloud >= 50
-                                        ? 'Cloudy'
-                                        : 'Partly cloudy'}
+                                    {forecastData &&
+                                        forecastData.current &&
+                                        forecastData.current.condition.text &&
+                                        forecastData.current.condition.text}
                                 </p>
                                 <div className={clsx('d-flex justify-content-evenly')}>
                                     <div className={clsx(style.humidity)}>
