@@ -3,8 +3,9 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import forecastReducer from './ForecastSlice';
+import CRUDReducer from './CRUDSlice';
 
-const persistConfig = {
+const persistForecastConfig = {
     key: 'forecast',
     storage: storage,
     whitelist: ['forecastData', 'localtime'],
@@ -12,7 +13,8 @@ const persistConfig = {
 
 // Combine các reducers
 const rootReducer = combineReducers({
-    forecast: persistReducer(persistConfig, forecastReducer),
+    forecast: persistReducer(persistForecastConfig, forecastReducer),
+    CRUD: CRUDReducer,
 });
 
 export default rootReducer;

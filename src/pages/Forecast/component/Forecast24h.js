@@ -37,10 +37,8 @@ const Forecast24h = () => {
                             <div key={index} className={clsx(style.item)}>
                                 <p>{item.temp_c}&nbsp;°C</p>
                                 <p>
-                                    {item.will_it_rain === 0 ? (
-                                        <img width="40" src={cloudImg} alt="cloudy"></img>
-                                    ) : (
-                                        <img width="40" src={rainImg} alt="rain"></img>
+                                    {item.condition.icon && (
+                                        <img width="40" src={item.condition.icon} alt="cloudy"></img>
                                     )}
                                 </p>
                                 <p>{time === item.time.split(' ')[1] ? 'Bây giờ' : item.time.split(' ')[1]}</p>

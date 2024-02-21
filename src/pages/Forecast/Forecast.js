@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
+import { debounce } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchForecast, setIsLoading, setCurrentCity } from '../../store/ForecastSlice';
@@ -12,19 +12,12 @@ import DetailPopup from './component/DetailPopup';
 import { getCurrentCityName } from '../../utils/geolocation';
 import Forecast24h from './component/Forecast24h';
 
-const options = [
-    { value: 'ha noi', label: 'Hà Nội' },
-    { value: 'hai phong', label: 'Hải Phòng' },
-    { value: 'vinh phuc', label: 'Vĩnh Phúc' },
-];
-
 const Forecast = () => {
     const [isComponentMounted, setIsComponentMounted] = useState(false);
-    const [selectedOption, setSelectedOption] = useState({ value: '', label: '' });
+    const [selectedOption, setSelectedOption] = useState('');
     const { forecastData, isLoading, localtime, isOpen, currentCity } = useSelector((state) => state.forecast);
     let dispatch = useDispatch();
     let time = formatLocalTime(localtime);
-
     useEffect(() => {
         dispatch(setIsLoading(true));
         getCurrentCityName((city) => {
@@ -37,15 +30,20 @@ const Forecast = () => {
     }, []);
 
     useEffect(() => {
-        let cityNameFomat = convertToLowerCaseAndRemoveAccents(currentCity);
-        setSelectedOption({ value: cityNameFomat, label: currentCity });
+        setSelectedOption(currentCity);
     }, [currentCity]);
 
     useEffect(() => {
         setIsComponentMounted(true);
-        if (selectedOption.value) {
-            dispatch(fetchForecast(selectedOption.value));
-        }
+        const delayedDispatch = debounce((option) => {
+            if (option) {
+                dispatch(fetchForecast(convertToLowerCaseAndRemoveAccents(option)));
+            }
+        }, 600);
+        delayedDispatch(selectedOption);
+        return () => {
+            delayedDispatch.cancel(); // Hủy debounce nếu component bị unmount
+        };
     }, [dispatch, selectedOption]);
 
     return (
@@ -60,12 +58,13 @@ const Forecast = () => {
                     <div className="col-12 location">
                         <div className="d-flex align-items-center">
                             <label className="flex-grow-3">Your city</label> &nbsp;&nbsp;
-                            <Select
-                                className="flex-grow-2"
-                                placeholder=""
+                            <input
+                                className="flex-grow-2 form-control w-auto fs-4"
+                                placeholder="Search City"
                                 value={selectedOption}
-                                onChange={setSelectedOption}
-                                options={options}
+                                onChange={(e) => {
+                                    setSelectedOption(e.target.value);
+                                }}
                             />
                         </div>
                     </div>
@@ -74,20 +73,19 @@ const Forecast = () => {
                             <div className="col-4">
                                 <div className={clsx(style.time)}>{time}</div>
                                 <div className={clsx(style.temperature)}>
-                                    <div className="d-flex justify-content-center align-items-center gap-5">
-                                        {forecastData && forecastData.current && forecastData.current.cloud >= 50 ? (
-                                            <div className={clsx(style.temperature_icon, 'material-icons')}>
-                                                cloud_queue
-                                                <span className={clsx(style.icon_chilren, 'material-icons')}>
-                                                    cloud_queue
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            <span></span>
-                                        )}
+                                    <div className="d-flex justify-content-center align-items-center">
+                                        {forecastData &&
+                                            forecastData.current &&
+                                            forecastData.current.condition.icon && (
+                                                <img
+                                                    width="100"
+                                                    src={forecastData.current.condition.icon}
+                                                    alt="cloudy"
+                                                ></img>
+                                            )}
                                         <h1 className={clsx(style.temperature_degree)}>
-                                            {forecastData && forecastData.current && forecastData.current.temp_f}
-                                            <span>°F</span>
+                                            {forecastData && forecastData.current && forecastData.current.temp_c}
+                                            <span>°C</span>
                                         </h1>
                                     </div>
                                 </div>
